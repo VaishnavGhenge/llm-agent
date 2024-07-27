@@ -10,7 +10,7 @@ def parse_resume(text: str) -> dict:
         "name": "Extracted Name",
         "experience": "Extracted Experience",
         "education": "Extracted Education",
-        "skills": "Extracted Skills"
+        "skills": "Extracted Skills",
     }
 
 
