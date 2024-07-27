@@ -5,7 +5,7 @@ This project is an AI-powered resume matching system that uses FastAPI, PostgreS
 ## Prerequisites
 
 - Docker and Docker Compose
-- Python 3.9+
+- Python 3.12+
 - pip and pip-tools
 
 ## Setup
@@ -28,7 +28,7 @@ This project is an AI-powered resume matching system that uses FastAPI, PostgreS
    pip install pip-tools
    ```
 
-4. Generate `requirements.txt` from `requirements.in`:
+4. Generate `requirements.txt` from `requirements.in` (Skip if already present):
    ```bash
    pip-compile requirements.in
    ```
