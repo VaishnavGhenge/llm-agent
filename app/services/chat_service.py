@@ -1,4 +1,4 @@
-from langchain.chat_models import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.chains import LLMChain
 from sqlalchemy.orm import Session
@@ -28,19 +28,22 @@ def process_chat_message(db: Session, job_id: str, message: str):
 
     chat = ChatOpenAI(temperature=0, openai_api_key=settings.OPENAI_API_KEY)
 
-    prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are an AI assistant helping with job candidate selection."),
-        ("human", "{context}\n\nUser Query: {message}")
-    ])
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", "You are an AI assistant helping with job candidate selection."),
+            ("human", "{context}\n\nUser Query: {message}"),
+        ]
+    )
 
     chain = LLMChain(llm=chat, prompt=prompt)
 
     response = chain.run(context=context, message=message)
 
     # Parse the response to extract candidates
-    candidates = response.split("Candidates:")[-1].strip().split(", ") if "Candidates:" in response else []
+    candidates = (
+        response.split("Candidates:")[-1].strip().split(", ")
+        if "Candidates:" in response
+        else []
+    )
 
-    return {
-        "text": response,
-        "candidates": candidates
-    }
+    return {"text": response, "candidates": candidates}

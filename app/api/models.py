@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import List, Optional
 
 
-class JobProfileCreate(BaseModel):
+class JobProfile(BaseModel):
     description: str = Field(..., min_length=10, max_length=300)
 
 
@@ -20,7 +20,7 @@ class Resume(BaseModel):
     summary: Optional[str] = None
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "id": "123e4567-e89b-12d3-a456-426614174000",
                 "filename": "resume.pdf",
@@ -28,6 +28,6 @@ class Resume(BaseModel):
                 "experience_years": 5,
                 "skills": ["Python", "Django", "SQL"],
                 "education": "B.Sc. in Computer Science",
-                "summary": "Experienced software developer with a passion for building scalable applications."
+                "summary": "Experienced software developer with a passion for building scalable applications.",
             }
         }

@@ -7,5 +7,7 @@ python-dotenv
 openai
 PyPDF2
 langchain
+langchain-community
 psycopg2-binary
 alembic
+black

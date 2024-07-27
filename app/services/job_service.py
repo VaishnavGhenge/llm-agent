@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
-from app.api.models import JobProfile, JobProfileCreate
+from app.api.models import JobProfile
 import uuid
 
 
-def create_job_profile(db: Session, job_profile: JobProfileCreate):
+def create_job_profile(db: Session, job_profile: JobProfile):
     db_job_profile = JobProfile(id=str(uuid.uuid4()), **job_profile.dict())
     db.add(db_job_profile)
     db.commit()
@@ -13,3 +13,7 @@ def create_job_profile(db: Session, job_profile: JobProfileCreate):
 
 def get_job_profile(db: Session, job_id: str):
     return db.query(JobProfile).filter(JobProfile.id == job_id).first()
+
+
+def get_all_resumes(db: Session):
+    return ""
