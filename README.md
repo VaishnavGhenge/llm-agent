@@ -44,7 +44,7 @@ This project is an AI-powered resume matching system that uses FastAPI, PostgreS
 To start the application and its dependencies:
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 The API will be available at `http://localhost:8000`.
@@ -56,7 +56,7 @@ The API will be available at `http://localhost:8000`.
 This project uses Black for code formatting. The formatting is automatically run as a pre-commit hook, but you can also run it manually:
 
 ```bash
-docker-compose run --rm web black .
+docker compose run --rm web black .
 ```
 
 ### Adding New Dependencies
@@ -65,7 +65,7 @@ docker-compose run --rm web black .
 2. Run `pip-compile requirements.in` to update `requirements.txt`.
 3. Rebuild the Docker images:
    ```bash
-   docker-compose build
+   docker compose build
    ```
 
 ### Database Migrations
@@ -73,13 +73,13 @@ docker-compose run --rm web black .
 To create a new migration:
 
 ```bash
-docker-compose run --rm web alembic revision --autogenerate -m "Description of the change"
+docker compose run --rm web alembic revision --autogenerate -m "Description of the change"
 ```
 
 To apply migrations:
 
 ```bash
-docker-compose run --rm web alembic upgrade head
+docker compose run --rm web alembic upgrade head
 ```
 
 ## Project Structure
@@ -117,7 +117,7 @@ project_root/
 To run tests:
 
 ```bash
-docker-compose run --rm web pytest
+docker compose run --rm web pytest
 ```
 
 ## Contributing
