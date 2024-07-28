@@ -1,6 +1,6 @@
 from app.core.database import Base
 
-from sqlalchemy import Column, String, Text, Integer, ARRAY
+from sqlalchemy import Column, String, Text, ARRAY, Float
 
 
 class JobProfileModel(Base):
@@ -23,7 +23,7 @@ class ResumeModel(Base):
     id = Column(String, primary_key=True, index=True)
     filename = Column(String, index=True)
     name = Column(String, index=True)
-    experience_years = Column(Integer)
+    experience_years = Column(Float)
     skills = Column(ARRAY(String))
     education = Column(String, nullable=True)
     summary = Column(Text, nullable=True)

@@ -7,12 +7,13 @@ from typing import List, Optional
 
 from app.api.models import ResumeModel
 from app.core.config import settings
-from app.services.logging_service import logger
 
 
 class GetResume(BaseModel):
     name: str = Field(description="Resume candidate name")
-    experience_years: int = Field(description="Resume candidate experience in years")
+    experience_years: float = Field(
+        description="Resume candidate total professional experience in years"
+    )
     skills: List[str] = Field(description="Resume candidate skills")
     education: Optional[List[str]] = Field(
         description="List of education titles of candidate"
