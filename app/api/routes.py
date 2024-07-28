@@ -7,7 +7,12 @@ from app.api.models import JobProfile, ChatMessage
 router = APIRouter()
 
 
-@router.post("/upload_resume/")
+@router.get("/")
+def read_root():
+    return {"message": "Hello from ResumeMatcher agent!"}
+
+
+@router.post("/resume/")
 async def upload_resume(
     background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
@@ -18,7 +23,7 @@ async def upload_resume(
     return {"message": "Resume uploaded and processing started"}
 
 
-@router.post("/create_job_profile/")
+@router.post("/job_profile/")
 async def create_job_profile(job_profile: JobProfile, db: Session = Depends(get_db)):
     return job_service.create_job_profile(db, job_profile)
 
