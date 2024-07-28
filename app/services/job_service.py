@@ -13,7 +13,3 @@ def create_job_profile(db: Session, job_profile: JobProfile):
 
 def get_job_profile(db: Session, job_id: str):
     return db.query(JobProfile).filter(JobProfile.id == job_id).first()
-
-
-def get_all_resumes(db: Session):
-    return ""
