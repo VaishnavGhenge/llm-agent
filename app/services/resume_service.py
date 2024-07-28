@@ -1,34 +1,54 @@
 import uuid
 
+from langchain_openai import ChatOpenAI
+from pydantic.v1 import BaseModel, Field
 from sqlalchemy.orm import Session
-from typing import TypedDict, List, Optional
+from typing import List, Optional
 
-from app.api.models import Resume
+from app.api.models import ResumeModel
+from app.core.config import settings
 from app.services.logging_service import logger
 
 
-class ResumeDict(TypedDict):
-    name: str
-    filename: str
-    experience_years: int
-    original_text: str
-    skills: List[str]
-    education: Optional[str]
-    summary: Optional[str]
+class GetResume(BaseModel):
+    name: str = Field(description="Resume candidate name")
+    experience_years: int = Field(description="Resume candidate experience in years")
+    skills: List[str] = Field(description="Resume candidate skills")
+    education: Optional[List[str]] = Field(
+        description="List of education titles of candidate"
+    )
+    summary: Optional[str] = Field(description="Resume candidate summary")
 
 
-def parse_resume(text: str):
-    logger.info(text)
+def parse_resume(text: str, filename: str) -> ResumeModel:
+    llm = ChatOpenAI(temperature=0, openai_api_key=settings.OPENAI_API_KEY)
+
+    prompt = [
+        (
+            "system",
+            "You are a resume text parser which extracts key insights from resume text.",
+        ),
+        ("human", text),
+    ]
+
+    structured_llm = llm.with_structured_output(GetResume)
+    parsed_resume: GetResume = structured_llm.invoke(prompt)
+
+    return ResumeModel(
+        id=str(uuid.uuid4()),
+        original_text=text,
+        filename=filename,
+        **parsed_resume.dict(),
+    )
 
 
 def create_resume(db: Session, text: str, filename: str):
-    parsed_resume = parse_resume(text)
-    # resume = Resume(id=str(uuid.uuid4()), filename=filename, **parsed_resume)
-    # db.add(resume)
-    # db.commit()
-    # db.refresh(resume)
-    # return parsed_resume
+    resume = parse_resume(text, filename)
+    db.add(resume)
+    db.commit()
+    db.refresh(resume)
+    return resume
 
 
 def get_all_resumes(db: Session):
-    return db.query(Resume).all()
+    return db.query(ResumeModel).all()

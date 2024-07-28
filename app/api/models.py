@@ -1,33 +1,30 @@
-from pydantic import BaseModel, Field
-from typing import List, Optional
+from app.core.database import Base
+
+from sqlalchemy import Column, String, Text, Integer, ARRAY
 
 
-class JobProfile(BaseModel):
-    description: str = Field(..., min_length=10, max_length=300)
+class JobProfileModel(Base):
+    __tablename__ = "job_profiles"
+
+    id = Column(String, primary_key=True, index=True)
+    description = Column(Text)
 
 
-class ChatMessage(BaseModel):
-    content: str = Field(..., min_length=1, max_length=500)
+class ChatMessageModel(Base):
+    __tablename__ = "chat_messages"
+
+    id = Column(String, primary_key=True, index=True)
+    content = Column(Text)
 
 
-class Resume(BaseModel):
-    id: str
-    filename: str
-    name: str
-    experience_years: int
-    skills: List[str]
-    education: Optional[str] = None
-    summary: Optional[str] = None
+class ResumeModel(Base):
+    __tablename__ = "resumes"
 
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "id": "123e4567-e89b-12d3-a456-426614174000",
-                "filename": "resume.pdf",
-                "name": "John Doe",
-                "experience_years": 5,
-                "skills": ["Python", "Django", "SQL"],
-                "education": "B.Sc. in Computer Science",
-                "summary": "Experienced software developer with a passion for building scalable applications.",
-            }
-        }
+    id = Column(String, primary_key=True, index=True)
+    filename = Column(String, index=True)
+    name = Column(String, index=True)
+    experience_years = Column(Integer)
+    skills = Column(ARRAY(String))
+    education = Column(String, nullable=True)
+    summary = Column(Text, nullable=True)
+    original_text = Column(Text, nullable=True)

@@ -1,9 +1,14 @@
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.chains import LLMChain
+from pydantic.v1 import BaseModel
 from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.services import job_service, resume_service
+
+
+class ChatMessageCreate(BaseModel):
+    content: str
 
 
 def get_matching_resumes(db: Session, job_description: str):
