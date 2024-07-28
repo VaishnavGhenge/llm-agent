@@ -89,7 +89,10 @@ langchain-core==0.2.24
     # via
     #   langchain
     #   langchain-community
+    #   langchain-openai
     #   langchain-text-splitters
+langchain-openai==0.1.19
+    # via -r requirements.in
 langchain-text-splitters==0.2.2
     # via langchain
 langsmith==0.1.93
@@ -122,7 +125,9 @@ numpy==1.26.4
     #   langchain
     #   langchain-community
 openai==1.37.1
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   langchain-openai
 orjson==3.10.6
     # via langsmith
 packaging==24.1
@@ -166,11 +171,14 @@ pyyaml==6.0.1
     #   langchain-community
     #   langchain-core
     #   uvicorn
+regex==2024.7.24
+    # via tiktoken
 requests==2.32.3
     # via
     #   langchain
     #   langchain-community
     #   langsmith
+    #   tiktoken
 rich==13.7.1
     # via typer
 shellingham==1.5.4
@@ -193,6 +201,8 @@ tenacity==8.5.0
     #   langchain
     #   langchain-community
     #   langchain-core
+tiktoken==0.7.0
+    # via langchain-openai
 tqdm==4.66.4
     # via openai
 typer==0.12.3

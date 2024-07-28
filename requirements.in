@@ -8,6 +8,7 @@ openai
 PyPDF2
 langchain
 langchain-community
+langchain-openai
 psycopg2-binary
 alembic
 black
