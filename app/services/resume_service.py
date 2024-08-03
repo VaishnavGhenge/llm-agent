@@ -3,22 +3,22 @@ import uuid
 from langchain_openai import ChatOpenAI
 from pydantic.v1 import BaseModel, Field
 from sqlalchemy.orm import Session
-from typing import Optional, cast, Type
+from typing import cast, Type
 
 from app.api.models import ResumeModel
 from app.core.config import settings
 
 
 class Resume(BaseModel):
-    name: str = Field(description="Resume candidate name")
+    name: str = Field(description="Candidate's name mentioned")
     experience_years: float = Field(
-        description="Resume candidate total professional experience in years"
+        description="Total years of experience of candidate across all job profiles (note: be confident about)"
     )
-    skills: list[str] = Field(description="Resume candidate skills")
-    education: Optional[list[str]] = Field(
-        description="List of education titles of candidate"
+    skills: list[str] = Field(description="Skills of candidate across all job profiles")
+    education: list[str] = Field(
+        description="Educational titles of candidate holding or achieved"
     )
-    summary: Optional[str] = Field(description="Resume candidate summary")
+    summary: str = Field(description="Summary of candidates profile with pros and cons of candidate")
 
 
 def parse_resume(text: str) -> Resume:
@@ -27,7 +27,7 @@ def parse_resume(text: str) -> Resume:
     prompt = [
         (
             "system",
-            "You are a resume text parser which extracts key insights from resume text.",
+            "You are a resume text parser which extracts given structured fields from the resume text",
         ),
         ("human", text),
     ]
